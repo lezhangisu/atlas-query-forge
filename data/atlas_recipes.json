@@ -1,0 +1,235 @@
+{
+  "version": "0.1.0",
+  "recipes": [
+    {
+      "id": "select_function",
+      "domain": "General Function",
+      "title": "Select Function",
+      "description": "Select a function by name.",
+      "natural_language_examples": [
+        "Find function dskenq",
+        "Select dskqopt",
+        "Get the function getbuf"
+      ],
+      "confidence_keywords": ["function", "find", "select", "get"],
+      "slots": {
+        "functionName": {
+          "type": "function",
+          "required": true,
+          "description": "Target function name"
+        }
+      },
+      "allowed_tags": [],
+      "allowed_methods": ["functions"],
+      "output_type": "query",
+      "template": "var ${functionVar} = functions(\"${functionName}\")"
+    },
+    {
+      "id": "show_cfg",
+      "domain": "Control Flow",
+      "title": "Show CFG",
+      "description": "Generate and show the control flow graph for a function.",
+      "natural_language_examples": [
+        "Show CFG for dskenq",
+        "Display the control flow graph for dskqopt",
+        "Generate a CFG for getbuf"
+      ],
+      "confidence_keywords": ["cfg", "control flow", "control-flow", "flow graph"],
+      "slots": {
+        "functionName": {
+          "type": "function",
+          "required": true,
+          "description": "Target function name"
+        }
+      },
+      "allowed_tags": ["XCSG.ControlFlow_Edge"],
+      "allowed_methods": ["functions", "cfg", "show"],
+      "output_type": "graph",
+      "template": "var ${functionVar} = functions(\"${functionName}\")\nvar ${functionVar}CFG = cfg(${functionVar})\nshow(${functionVar}CFG)"
+    },
+    {
+      "id": "find_loops",
+      "domain": "Loop Analysis",
+      "title": "Find Loops",
+      "description": "Find all loop nodes in a function CFG.",
+      "natural_language_examples": [
+        "Find all loops in dskqopt",
+        "Show loops inside function dskenq",
+        "List loop nodes for getbuf"
+      ],
+      "confidence_keywords": ["loop", "loops", "for", "while"],
+      "slots": {
+        "functionName": {
+          "type": "function",
+          "required": true,
+          "description": "Target function name"
+        }
+      },
+      "allowed_tags": ["XCSG.Loop"],
+      "allowed_methods": ["functions", "cfg", "nodes", "show"],
+      "output_type": "graph",
+      "template": "var ${functionVar}CFG = cfg(functions(\"${functionName}\"))\nvar ${functionVar}Loops = ${functionVar}CFG.nodes(XCSG.Loop)\nshow(${functionVar}Loops)"
+    },
+    {
+      "id": "count_loops",
+      "domain": "Loop Analysis",
+      "title": "Count Loops",
+      "description": "Count loop nodes in a function CFG.",
+      "natural_language_examples": [
+        "Count loops in dskenq",
+        "How many loops are in dskqopt?",
+        "Return the number of loops in getbuf"
+      ],
+      "confidence_keywords": ["count", "how many", "number", "loop", "loops"],
+      "slots": {
+        "functionName": {
+          "type": "function",
+          "required": true,
+          "description": "Target function name"
+        }
+      },
+      "allowed_tags": ["XCSG.Loop"],
+      "allowed_methods": ["functions", "cfg", "nodes", "eval.nodes.size"],
+      "output_type": "count",
+      "template": "var ${functionVar}CFG = cfg(functions(\"${functionName}\"))\nvar ${functionVar}Loops = ${functionVar}CFG.nodes(XCSG.Loop)\n${functionVar}Loops.eval.nodes.size"
+    },
+    {
+      "id": "find_branches",
+      "domain": "Control Flow",
+      "title": "Find Branch Conditions",
+      "description": "Find conditional branch nodes in a function CFG.",
+      "natural_language_examples": [
+        "Find branches in dskenq",
+        "Show conditional branches in dskqopt",
+        "List condition nodes for getbuf"
+      ],
+      "confidence_keywords": ["branch", "branches", "condition", "conditions", "conditional", "if"],
+      "slots": {
+        "functionName": {
+          "type": "function",
+          "required": true,
+          "description": "Target function name"
+        }
+      },
+      "allowed_tags": ["XCSG.ControlFlowCondition"],
+      "allowed_methods": ["functions", "cfg", "nodes", "show"],
+      "output_type": "graph",
+      "template": "var ${functionVar}CFG = cfg(functions(\"${functionName}\"))\nvar ${functionVar}Branches = ${functionVar}CFG.nodes(XCSG.ControlFlowCondition)\nshow(${functionVar}Branches)"
+    },
+    {
+      "id": "count_branches",
+      "domain": "Control Flow",
+      "title": "Count Branch Conditions",
+      "description": "Count conditional branch nodes in a function CFG.",
+      "natural_language_examples": [
+        "Count branches in dskenq",
+        "How many conditions are in dskqopt?",
+        "Return the number of branch conditions in getbuf"
+      ],
+      "confidence_keywords": ["count", "how many", "number", "branch", "branches", "condition", "conditions"],
+      "slots": {
+        "functionName": {
+          "type": "function",
+          "required": true,
+          "description": "Target function name"
+        }
+      },
+      "allowed_tags": ["XCSG.ControlFlowCondition"],
+      "allowed_methods": ["functions", "cfg", "nodes", "eval.nodes.size"],
+      "output_type": "count",
+      "template": "var ${functionVar}CFG = cfg(functions(\"${functionName}\"))\nvar ${functionVar}Branches = ${functionVar}CFG.nodes(XCSG.ControlFlowCondition)\n${functionVar}Branches.eval.nodes.size"
+    },
+    {
+      "id": "find_back_edges",
+      "domain": "Loop Analysis",
+      "title": "Find Back Edges",
+      "description": "Find loop control-flow back edges in a function CFG.",
+      "natural_language_examples": [
+        "Find back edges in dskenq",
+        "Show control flow back edges for dskqopt",
+        "List loop back edges for getbuf"
+      ],
+      "confidence_keywords": ["back edge", "back-edge", "backedge", "loop edge", "back edges"],
+      "slots": {
+        "functionName": {
+          "type": "function",
+          "required": true,
+          "description": "Target function name"
+        }
+      },
+      "allowed_tags": ["XCSG.ControlFlowBackEdge"],
+      "allowed_methods": ["functions", "cfg", "edges", "retainEdges", "show"],
+      "output_type": "graph",
+      "template": "var ${functionVar}CFG = cfg(functions(\"${functionName}\"))\nvar ${functionVar}BackEdges = ${functionVar}CFG.edges(XCSG.ControlFlowBackEdge).retainEdges\nshow(${functionVar}BackEdges)"
+    },
+    {
+      "id": "show_call_graph",
+      "domain": "Call Graph",
+      "title": "Show Callees",
+      "description": "Show functions called by a target function.",
+      "natural_language_examples": [
+        "Show functions called by dskenq",
+        "Find callees of dskqopt",
+        "Show the call graph from getbuf"
+      ],
+      "confidence_keywords": ["call", "calls", "callee", "callees", "call graph", "called functions"],
+      "slots": {
+        "functionName": {
+          "type": "function",
+          "required": true,
+          "description": "Target function name"
+        }
+      },
+      "allowed_tags": ["XCSG.Call"],
+      "allowed_methods": ["functions", "edges", "forwardOn", "show"],
+      "output_type": "graph",
+      "template": "var ${functionVar} = functions(\"${functionName}\")\nvar ${functionVar}Callees = ${functionVar}.forwardOn(edges(XCSG.Call))\nshow(${functionVar}Callees)"
+    },
+    {
+      "id": "show_callers",
+      "domain": "Call Graph",
+      "title": "Show Callers",
+      "description": "Show functions that call a target function.",
+      "natural_language_examples": [
+        "Show callers of freebuf",
+        "Find functions that call getbuf",
+        "Show functions that invoke dskenq"
+      ],
+      "confidence_keywords": ["caller", "callers", "called by", "reverse call", "functions that call", "invoke"],
+      "slots": {
+        "functionName": {
+          "type": "function",
+          "required": true,
+          "description": "Target function name"
+        }
+      },
+      "allowed_tags": ["XCSG.Call"],
+      "allowed_methods": ["functions", "edges", "reverseOn", "show"],
+      "output_type": "graph",
+      "template": "var ${functionVar} = functions(\"${functionName}\")\nvar ${functionVar}Callers = ${functionVar}.reverseOn(edges(XCSG.Call))\nshow(${functionVar}Callers)"
+    },
+    {
+      "id": "find_nested_loops",
+      "domain": "Loop Analysis",
+      "title": "Find Nested Loops",
+      "description": "Find loops contained within other loops in a function CFG.",
+      "natural_language_examples": [
+        "Find nested loops in dskenq",
+        "Show nested loop structure in dskqopt",
+        "List loops contained inside other loops for getbuf"
+      ],
+      "confidence_keywords": ["nested loop", "nested loops", "loop child", "contained loop", "contained loops"],
+      "slots": {
+        "functionName": {
+          "type": "function",
+          "required": true,
+          "description": "Target function name"
+        }
+      },
+      "allowed_tags": ["XCSG.Loop", "XCSG.LoopChild"],
+      "allowed_methods": ["functions", "cfg", "nodes", "edges", "between", "retainEdges", "show"],
+      "output_type": "graph",
+      "template": "var ${functionVar}CFG = cfg(functions(\"${functionName}\"))\nvar ${functionVar}Loops = ${functionVar}CFG.nodes(XCSG.Loop)\nvar ${functionVar}NestedLoops = edges(XCSG.LoopChild).between(${functionVar}Loops, ${functionVar}Loops).retainEdges\nshow(${functionVar}NestedLoops)"
+    }
+  ]
+}

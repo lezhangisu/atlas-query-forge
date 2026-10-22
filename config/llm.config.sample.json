@@ -1,0 +1,9 @@
+{
+  "provider": "dashscope-compatible",
+  "model": "YOUR_MODEL_NAME",
+  "baseURL": "https://YOUR_ENDPOINT/compatible-mode/v1",
+  "apiKeyEnv": "DASHSCOPE_API_KEY",
+  "apiKey": "",
+  "temperature": 0,
+  "timeoutMs": 30000
+}

@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Atlas Query Agent Demo</title>
+    <link rel="stylesheet" href="./src/styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <section class="hero">
+        <p class="eyebrow">Atlas Query Agent Demo</p>
+        <h1 class="v2-title">English requests into Atlas recipes.</h1>
+        <p class="hero-copy">
+          Describe the program analysis you want, then get a copyable Atlas Query
+          for control-flow, loop, branch, or call-graph exploration.
+        </p>
+      </section>
+
+      <section class="panel input-panel" aria-labelledby="request-heading">
+        <div class="panel-heading">
+          <div>
+            <p class="section-label">Step 1</p>
+            <h2 id="request-heading">Describe the query</h2>
+          </div>
+          <span id="v2-status" class="pill muted">LLM mode</span>
+        </div>
+
+        <label class="visually-hidden" for="request-input">English request</label>
+        <textarea
+          id="request-input"
+          rows="5"
+          placeholder="Example: Find nested loops in dskqopt"
+        ></textarea>
+
+        <div class="actions">
+          <button id="generate-button" class="primary-button" type="button">Generate with LLM</button>
+          <button id="clear-button" class="ghost-button" type="button">Clear</button>
+        </div>
+
+        <div>
+          <p class="section-label">Examples</p>
+          <div id="example-buttons" class="example-grid"></div>
+        </div>
+      </section>
+
+      <section class="result-grid">
+        <aside class="panel" aria-labelledby="intent-heading">
+          <div class="panel-heading">
+            <div>
+              <p class="section-label">Step 2</p>
+              <h2 id="intent-heading">LLM decision</h2>
+            </div>
+            <span id="confidence-badge" class="pill muted">No result</span>
+          </div>
+
+          <div id="active-recipe" class="active-card empty-state">
+            Enter a request to see the model-selected recipe.
+          </div>
+
+          <div>
+            <p class="section-label">Extracted JSON</p>
+            <pre class="code-frame compact"><code id="llm-json">Model output will appear here.</code></pre>
+          </div>
+        </aside>
+
+        <section class="panel" aria-labelledby="output-heading">
+          <div class="panel-heading">
+            <div>
+              <p class="section-label">Step 3</p>
+              <h2 id="output-heading">Atlas Query output</h2>
+            </div>
+            <button id="copy-button" class="ghost-button small" type="button" disabled>Copy</button>
+          </div>
+
+          <div id="slot-display" class="slot-display empty-state">No slots extracted yet.</div>
+
+          <pre class="code-frame"><code id="query-output">Generated Atlas Query will appear here.</code></pre>
+
+          <div id="warning-list" class="warning-list"></div>
+        </section>
+      </section>
+    </main>
+
+    <script type="module" src="./src/app-v2.js"></script>
+  </body>
+</html>
